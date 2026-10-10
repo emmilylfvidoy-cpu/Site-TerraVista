@@ -320,7 +320,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
       <a href="#empresa">Empresa</a>
       <a href="#contato">Contato</a>
     </div>
-    <a class="cta" href="https://terravista-portal-ten.vercel.app/" target="_blank" rel="noopener">Ver o Geoportal ↗</a>
   </div>
 </nav>
 
@@ -335,13 +334,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
       <h1>Todo o território.<br><em>Um só mapa.</em></h1>
       <p class="lead">Limites, uso do solo, hidrografia e sistema viário do município reunidos numa plataforma que roda direto no navegador.</p>
       <div class="btns">
-        <a class="btn primary" href="https://terravista-portal-ten.vercel.app/" target="_blank" rel="noopener">Explorar o Geoportal</a>
         <a class="btn ghost" href="#empresa">Ficha da empresa</a>
       </div>
       <div class="hx-stats">
-        <div><b data-count="271">0</b><span>km² mapeados</span></div>
         <div><b data-count="645">0</b><span>municípios em SP</span></div>
-        <div><b data-count="4">0</b><span>camadas integradas</span></div>
         <div><b>100%</b><span>no navegador</span></div>
       </div>
     </div>
@@ -491,18 +487,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   <div class="wrap">
     <span class="eyebrow">Estágio</span>
     <h2 class="sec-title">Onde estamos</h2>
-    <p class="sec-sub">Produto funcional em demonstração, com município piloto mapeado.</p>
+    <p class="sec-sub">Produto funcional em demonstração.</p>
     <div class="stats">
       <div class="stat"><b>2021</b><span>Fundação</span></div>
-      <div class="stat"><b>1</b><span>Município piloto mapeado</span></div>
-      <div class="stat"><b>271 km²</b><span>Território coberto</span></div>
       <div class="stat"><b>10+</b><span>Ferramentas no Geoportal</span></div>
     </div>
     <div style="height:30px"></div>
     <div class="tl">
       <div class="step"><div class="y">2021</div><h3>Fundação</h3><p>Empresa criada em Piracicaba/SP com foco em geotecnologia.</p></div>
       <div class="step"><div class="y">2026</div><h3>ESALQTec</h3><p>Associada à incubadora de base tecnológica da ESALQ/USP.</p></div>
-      <div class="step now"><div class="y">Hoje</div><h3>MVP no ar</h3><p>Geoportal demonstrativo de Santa Bárbara d’Oeste (LC nº 328/2022).</p></div>
+      <div class="step now"><div class="y">Hoje</div><h3>MVP no ar</h3><p>Geoportal demonstrativo em desenvolvimento.</p></div>
     </div>
   </div>
 </section>
@@ -566,7 +560,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
         <h2 style="margin:16px 0 10px">Leve o Geoportal para o seu município.</h2>
         <p>Agende uma demonstração ou conheça a versão de teste já disponível online.</p>
         <div class="btns" style="margin-top:20px">
-          <a class="btn primary" href="https://terravista-portal-ten.vercel.app/" target="_blank" rel="noopener">Abrir o Geoportal</a>
           <a class="btn ghost" href="https://esalqtec.com.br/nova-empresa-associada-terravista-geotecnologia/" target="_blank" rel="noopener">Notícia ESALQTec</a>
         </div>
       </div>
@@ -644,6 +637,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     .on('mousemove', function(e, d){
       if(hero.dataset.scene === 'brasil' || hero.dataset.scene === 'camadas') return;
       var r = hero.getBoundingClientRect();
+      if(d === sbo){ tip.hidden = true; return; }
       tip.hidden = false; tip.textContent = d.n;
       tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px';
     })
@@ -660,7 +654,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   labs.selectAll('text').data(near).join('text')
     .attr('class', function(d){ return 'lab ' + (d === sbo ? 'lab-sbo' : d === pira ? 'lab-pira' : 'nb'); })
     .attr('data-x', function(d){ return path.centroid(d)[0]; }).attr('data-y', function(d){ return path.centroid(d)[1]; })
-    .text(function(d){ return d.n; });
+    .text(function(d){ return d === sbo ? '' : d.n; });
   var spC = path.centroid(sp);
   labs.append('text').attr('class','lab lab-uf').attr('data-x', spC[0]).attr('data-y', spC[1] - 8).text('SÃO PAULO');
 
@@ -707,8 +701,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     SC = {
       brasil:    {v: view(ufFC, 1.08), t: 'Brasil', s: '27 unidades da federação · IBGE'},
       sp:        {v: view(sp, 1.12),   t: 'São Paulo', s: '645 municípios · malha IBGE'},
-      regiao:    {v: view({type:'MultiPoint', coordinates: Rg}, 1.0), t: 'Região de Piracicaba', s: 'Sede em Piracicaba · piloto em Santa Bárbara d’Oeste'},
-      municipio: {v: view(sbo, 1.25),  t: 'Santa Bárbara d’Oeste', s: '271,03 km² · ' + fmt(L.major.length + L.minor.length) + ' trechos de vias · ' + fmt(L.river.length) + ' cursos d’água'},
+      regiao:    {v: view({type:'MultiPoint', coordinates: Rg}, 1.0), t: 'Região de Piracicaba', s: 'Sede em Piracicaba'},
+      municipio: {v: view(sbo, 1.25),  t: 'Município piloto', s: 'Limite · vias · hidrografia'},
       camadas:   {v: view(sbo, 1.9),   t: 'Camadas sobrepostas', s: 'Limite · uso do solo · hidrografia · sistema viário'}
     };
   }
@@ -774,7 +768,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   });
 
   var hs = hero.querySelector('.hx-search'), hsT = document.getElementById('hsTyped');
-  var TXT = 'Santa Bárbara d’Oeste, SP';
+  var TXT = 'Rua das Palmeiras, 100';
   function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
   async function typeSearch(me){
     hs.classList.remove('done'); hs.classList.add('typing'); hsT.textContent = '';
@@ -794,7 +788,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   }
   var ai = document.getElementById('hxAi'), aiQ = document.getElementById('aiQ'), aiAT = document.getElementById('aiAT');
   var AQ = 'Quais áreas do município ficam perto de rios?';
-  var AA = 'Cruzei <b>' + fmt(L.river.length) + ' cursos d’água</b> e <b>' + fmt(L.water.length) + ' corpos d’água</b> com <b>271 km²</b> de território. Destaquei a hidrografia no mapa.';
+  var AA = 'Cruzei <b>' + fmt(L.river.length) + ' cursos d’água</b> e <b>' + fmt(L.water.length) + ' corpos d’água</b> no município. Destaquei a hidrografia no mapa.';
   async function aiChat(me){
     ai.className = 'hx-ai'; aiQ.textContent = ''; aiAT.innerHTML = '';
     for (var i = 1; i <= AQ.length; i++){ if(me !== token) return; aiQ.textContent = AQ.slice(0, i); await wait(16); }
