@@ -350,15 +350,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     <span class="hs-res">✓ encontrado</span>
   </div>
 
-  <div class="hx-ai" id="hxAi" aria-label="Assistente de IA (demonstração)">
-    <div class="ai-head">
-      <span class="ai-spark"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 5.6L19.5 9.5l-5.6 1.9L12 17l-1.9-5.6L4.5 9.5l5.6-1.9zM19 14l.9 2.6 2.6.9-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9z"/></svg></span>
-      <b>TerraVista IA</b><span class="ai-tag">em breve</span>
-    </div>
-    <div class="ai-msg ai-user" id="aiQ"></div>
-    <div class="ai-msg ai-bot" id="aiA"><span class="ai-dots"><i></i><i></i><i></i></span><span id="aiAT"></span></div>
-    <div class="ai-act" id="aiAct"><span>◎</span> Hidrografia destacada no mapa</div>
-  </div>
   <aside class="hx-layers" id="hxLayers" aria-label="Camadas">
     <h4>Camadas</h4>
     <div class="lr" data-l="3" style="--c:#c6f04a"><i></i><span>Sistema viário<small>OpenStreetMap</small></span><b class="sw"></b></div>
@@ -483,6 +474,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
 </section>
 
 <!-- NÚMEROS + TRAJETÓRIA -->
+<!-- WEBGIS AMBIENTAL -->
+<section id="webgis">
+  <div class="wrap">
+    <div class="card" style="padding:32px;display:grid;gap:20px;align-items:center;border-color:#7cb90166">
+      <div>
+        <span class="pill">Novo · em lançamento</span>
+        <h2 class="sec-title" style="margin:14px 0 10px">WebGIS para estudos ambientais</h2>
+        <p style="color:var(--muted);font-size:16px;max-width:720px">Além do geoportal, a TerraVista está lançando um WebGIS para estudos ambientais: carregue ou desenhe as áreas de influência do projeto, recorte as camadas de caracterização e gere tabelas, gráficos, mapas e relatórios-base, tudo no navegador.</p>
+        <div class="btns" style="margin-top:20px">
+          <a class="btn primary" href="https://portaldoeiarima.vercel.app/" target="_blank" rel="noopener">Conhecer o WebGIS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="alt">
   <div class="wrap">
     <span class="eyebrow">Estágio</span>
@@ -629,7 +636,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     .on('mousemove', function(e, d){
       if(hero.dataset.scene === 'brasil' || hero.dataset.scene === 'camadas') return;
       var r = hero.getBoundingClientRect();
-      if(d === sbo){ tip.hidden = true; return; }
+      tip.hidden = true; return;
       tip.hidden = false; tip.textContent = d.n;
       tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px';
     })
@@ -646,7 +653,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   labs.selectAll('text').data(near).join('text')
     .attr('class', function(d){ return 'lab ' + (d === sbo ? 'lab-sbo' : d === pira ? 'lab-pira' : 'nb'); })
     .attr('data-x', function(d){ return path.centroid(d)[0]; }).attr('data-y', function(d){ return path.centroid(d)[1]; })
-    .text(function(d){ return d === sbo ? '' : d.n; });
+    .text('');
   var spC = path.centroid(sp);
   labs.append('text').attr('class','lab lab-uf').attr('data-x', spC[0]).attr('data-y', spC[1] - 8).text('SÃO PAULO');
 
@@ -693,8 +700,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     SC = {
       brasil:    {v: view(ufFC, 1.08), t: 'Brasil', s: '27 unidades da federação · IBGE'},
       sp:        {v: view(sp, 1.12),   t: 'São Paulo', s: '645 municípios · malha IBGE'},
-      regiao:    {v: view({type:'MultiPoint', coordinates: Rg}, 1.0), t: 'Região de Piracicaba', s: 'Sede em Piracicaba'},
-      municipio: {v: view(sbo, 1.25),  t: 'Município piloto', s: 'Limite · vias · hidrografia'},
+      regiao:    {v: view({type:'MultiPoint', coordinates: Rg}, 1.0), t: 'Região', s: 'Aproximando do território'},
+      municipio: {v: view(sbo, 1.25),  t: 'Município', s: 'Limite · vias · hidrografia'},
       camadas:   {v: view(sbo, 1.9),   t: 'Camadas sobrepostas', s: 'Limite · uso do solo · hidrografia · sistema viário'}
     };
   }
@@ -778,23 +785,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
         .tween('text', function(){ var f = d3.interpolateRound(0, n); return function(t){ b.textContent = fmt(f(t)); }; });
     });
   }
-  var ai = document.getElementById('hxAi'), aiQ = document.getElementById('aiQ'), aiAT = document.getElementById('aiAT');
-  var AQ = 'Quais áreas do município ficam perto de rios?';
-  var AA = 'Cruzei <b>' + fmt(L.river.length) + ' cursos d’água</b> e <b>' + fmt(L.water.length) + ' corpos d’água</b> no município. Destaquei a hidrografia no mapa.';
   async function aiChat(me){
-    ai.className = 'hx-ai'; aiQ.textContent = ''; aiAT.innerHTML = '';
-    for (var i = 1; i <= AQ.length; i++){ if(me !== token) return; aiQ.textContent = AQ.slice(0, i); await wait(16); }
-    ai.classList.add('thinking'); await wait(650); if(me !== token) return;
-    ai.classList.remove('thinking'); ai.classList.add('answering');
-    var plain = AA.replace(/<[^>]+>/g, '');
-    for (var j = 1; j <= plain.length; j += 3){ if(me !== token) return; aiAT.textContent = plain.slice(0, j); await wait(16); }
-    aiAT.innerHTML = AA; ai.classList.add('done');
+    await wait(900); if(me !== token) return;
     setLayer(2, true); reveal(2, true, 600);
     layers[2].svg.classed('glow', false); void layers[2].svg.node().getBoundingClientRect(); layers[2].svg.classed('glow', true);
   }
-  function aiFinal(){ aiQ.textContent = AQ; aiAT.innerHTML = AA; ai.className = 'hx-ai done'; }
   function finalState(){
-    aiFinal();
     hsT.textContent = TXT; hs.classList.add('typing', 'done');
     [0,1,2,3].forEach(function(i){ setLayer(i, true); reveal(i, true, 600); });
   }
@@ -805,7 +801,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     var me = ++token;
     if(reduce){ finalState(); go('camadas', 0); return; }
     [0,1,2,3].forEach(function(i){ setLayer(i, false); reveal(i, false, 0); });
-    ai.className = 'hx-ai'; aiQ.textContent = ''; aiAT.innerHTML = '';
     go('brasil', 0); countUp();
     typeSearch(me); await wait(500); if(me !== token) return;
     for (var n of ['sp','regiao','municipio']){
