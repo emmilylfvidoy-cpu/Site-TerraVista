@@ -629,7 +629,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   // placas (folhas) do modo 3D
   var sb = path.bounds(sbo), padP = (sb[1][0]-sb[0][0]) * .14;
   var P = [sb[0][0]-padP, sb[0][1]-padP, sb[1][0]-sb[0][0]+2*padP, sb[1][1]-sb[0][1]+2*padP];
-  var META = [['LIMITE MUNICIPAL · IBGE','#7cb901'],['USO DO SOLO · OSM','#f0a35e'],['HIDROGRAFIA · OSM','#3fa0ff'],['SISTEMA VIÁRIO · OSM','#c6f04a']];
+  var META = [['LIMITE MUNICIPAL','#7cb901'],['USO DO SOLO','#f0a35e'],['HIDROGRAFIA','#3fa0ff'],['SISTEMA VIÁRIO','#c6f04a']];
   layers.forEach(function(Ly, i){
     var pg = Ly.g.append('g').attr('class','plate');
     pg.append('rect').attr('x',P[0]).attr('y',P[1]).attr('width',P[2]).attr('height',P[3]).attr('rx',P[2]*.03).style('stroke',META[i][1]);
@@ -850,6 +850,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     await aiChat(me); if(me !== token) return;
     await wait(1800); if(me !== token) return;
     go('camadas');
+    await wait(1900); if(me !== token) return;
+    loop(me);
+  }
+  // ciclo contínuo: camadas se sobrepõem no mapa e depois se separam em 3D
+  async function loop(me){
+    while(me === token){
+      await wait(2800); if(me !== token) return;
+      go('municipio'); await wait(2000); if(me !== token) return;
+      for (var a = 3; a >= 1; a--){ reveal(a, false, 500); await wait(380); if(me !== token) return; }
+      await wait(500); if(me !== token) return;
+      for (var b = 1; b <= 3; b++){ reveal(b, true, 1000); await wait(750); if(me !== token) return; }
+      await wait(900); if(me !== token) return;
+      go('camadas'); await wait(1900);
+    }
   }
   intro();
 })();
