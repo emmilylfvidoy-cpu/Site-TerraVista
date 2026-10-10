@@ -336,21 +336,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
       <div class="btns">
         <a class="btn ghost" href="#empresa">Ficha da empresa</a>
       </div>
-      <div class="hx-stats">
-        <div><b data-count="645">0</b><span>municípios em SP</span></div>
-        <div><b>100%</b><span>no navegador</span></div>
-      </div>
     </div>
     <a class="hx-scroll" href="#solucao">Role para conhecer <span>↓</span></a>
   </div>
 
-  <div class="hsearch hx-search" aria-hidden="true">
+  <div class="hsearch hx-search" aria-hidden="true" style="display:none">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <span class="hs-text"><span id="hsTyped"></span><i class="caret"></i><span class="hs-ph">Buscar endereço, CEP ou município…</span></span>
     <span class="hs-res">✓ encontrado</span>
   </div>
 
-  <aside class="hx-layers" id="hxLayers" aria-label="Camadas">
+  <aside class="hx-layers" id="hxLayers" aria-label="Camadas" style="display:none">
     <h4>Camadas</h4>
     <div class="lr" data-l="3" style="--c:#c6f04a"><i></i><span>Sistema viário<small>OpenStreetMap</small></span><b class="sw"></b></div>
     <div class="lr" data-l="2" style="--c:#3fa0ff"><i></i><span>Hidrografia<small>OpenStreetMap</small></span><b class="sw"></b></div>
@@ -465,26 +461,30 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
     </div>
 
     <div style="height:36px"></div>
-    <div class="grid g3">
+    <div class="grid g2">
       <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Diferencial</h3><p>Consolida fontes heterogêneas numa interface simples — o usuário não precisa saber GIS.</p></div>
-      <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/></svg></div><h3>Modelo de negócio</h3><p>Assinatura por município (licença SaaS) e planos para profissionais, com relatórios avulsos. <span class="todo">validar</span></p></div>
       <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12Z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>Impacto</h3><p>Transparência pública, planejamento urbano e proteção ambiental (ODS 11 e 15).</p></div>
     </div>
   </div>
 </section>
 
 <!-- NÚMEROS + TRAJETÓRIA -->
-<!-- WEBGIS AMBIENTAL -->
-<section id="webgis">
+<!-- PRODUTOS -->
+<section id="produtos">
   <div class="wrap">
-    <div class="card" style="padding:32px;display:grid;gap:20px;align-items:center;border-color:#7cb90166">
-      <div>
-        <span class="pill">Novo · em lançamento</span>
-        <h2 class="sec-title" style="margin:14px 0 10px">WebGIS para estudos ambientais</h2>
-        <p style="color:var(--muted);font-size:16px;max-width:720px">Além do geoportal, a TerraVista está lançando um WebGIS para estudos ambientais: carregue ou desenhe as áreas de influência do projeto, recorte as camadas de caracterização e gere tabelas, gráficos, mapas e relatórios-base, tudo no navegador.</p>
-        <div class="btns" style="margin-top:20px">
-          <a class="btn primary" href="https://portaldoeiarima.vercel.app/" target="_blank" rel="noopener">Conhecer o WebGIS</a>
-        </div>
+    <span class="eyebrow">Produtos</span>
+    <h2 class="sec-title">Duas plataformas, um mesmo território.</h2>
+    <p class="sec-sub">Soluções web de geotecnologia para quem decide, aprova e licencia.</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="pill">Disponível em demonstração</span>
+        <h3>TerraVista Geoportal</h3>
+        <p>Limites, uso do solo, hidrografia e sistema viário reunidos em uma plataforma que roda direto no navegador, com consulta, medição e relatórios.</p>
+      </div>
+      <div class="card" style="border-color:#7cb90166">
+        <span class="pill">Em lançamento</span>
+        <h3>Portal para estudos ambientais</h3>
+        <p>WebGIS para estudos ambientais: carregue ou desenhe as áreas de influência do projeto, recorte as camadas de caracterização e gere tabelas, gráficos, mapas e relatórios-base.</p>
       </div>
     </div>
   </div>
@@ -526,7 +526,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
         <div class="row"><dt>Setor</dt><dd>Tecnologia · Geotecnologia / GovTech</dd></div>
         <div class="row"><dt>Estágio</dt><dd>MVP / validação de mercado</dd></div>
         <div class="row"><dt>Ecossistema</dt><dd>Associada à ESALQTec (ESALQ/USP)</dd></div>
-        <div class="row"><dt>Produto</dt><dd>TerraVista Geoportal (SaaS web)</dd></div>
+        <div class="row"><dt>Produtos</dt><dd>TerraVista Geoportal e portal para estudos ambientais (SaaS web)</dd></div>
         <div class="row" style="grid-column:1/-1;border-right:0"><dt>Responsável</dt><dd>Emmily Larissa Felippe Vidoy</dd></div>
       </dl>
     </div>
@@ -686,8 +686,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;
   function layout(){
     var r = stage.getBoundingClientRect();
     var pr = document.querySelector('.hx-panel').getBoundingClientRect();
-    var lp = document.getElementById('hxLayers').getBoundingClientRect();
-    var x0 = pr.right - r.left + 40, x1 = lp.left - r.left - 30;
+    var x0 = pr.right - r.left + 40, x1 = r.width - 40;
     R = {x: x0, y: 100, w: Math.max(240, x1 - x0), h: Math.max(240, r.height - 100 - 110)};
     layers.forEach(function(Ly){ Ly.svg.attr('viewBox', '0 0 ' + r.width + ' ' + r.height); });
     hero.style.setProperty('--rx', x0 + 'px'); hero.style.setProperty('--rw', R.w + 'px');
